@@ -1,11 +1,65 @@
 <%- include('template/header'); %>
+
+
+<style>
+    /* https://codepen.io/kryvonos_v/pen/zXKYvw */
+    @font-face {
+        font-family: "codystar";
+        src: url("assets/fonts/codystar/Codystar-Regular.ttf");
+    }
+
+    .marquee {
+        overflow: hidden;
+        font-family: "codystar", "Pridi", sans-serif;
+        font-weight: 600;
+        font-size: 60px;
+        /* font-size: 34px; */
+        text-transform: uppercase;
+        background-color: #000;
+        /* background-color: #FFDC00; */
+        color: red;
+    }
+
+    .marquee__inner {
+        display: flex;
+    }
+
+    .marquee__line {
+        flex-shrink: 0;
+        margin: 0;
+        padding: 10px 15px;
+        min-width: 100%;
+        white-space: nowrap;
+        animation-name: marqueeLine;
+        animation-duration: 5s;
+        animation-timing-function: ease-in-out;
+        animation-iteration-count: infinite;
+    }
+
+    @keyframes marqueeLine {
+        from {
+            transform: translateX(0);
+        }
+
+        to {
+            transform: translateX(-100%);
+        }
+    }
+</style>
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <h1>Welcome!</h1>
-                    <marquee id="welcomeMessage" behavior="" direction="">Waiting for input...</marquee>
+                    <div class="marquee">
+                        <div class="marquee__inner">
+                            <p class="marquee__line" id="output">Design is not just what it looks like and feels like.
+                                Design is how it
+                                works.</p>
+                        </div>
+                    </div>
+                    <!-- <marquee id="welcomeMessage" behavior="" direction="">Waiting for input...</marquee> -->
 
                 </div>
             </div>
@@ -29,8 +83,20 @@
     };
 
     ws.onmessage = (event) => {
-        console.log(event);
-        document.getElementById('welcomeMessage').textContent = event.data;
+        // console.log(event);
+        // document.getElementById('welcomeMessage').textContent = event.data;
+
+        var msg = event.data.split(":");
+        // console.log(msg);
+
+        if (msg[0].trim() == 'setwelcome') {
+            var writeback = msg[1];
+            var output = document.getElementById('output');
+            if (output) {
+                output.innerHTML = writeback;
+            }
+            // conn.send('write:' + writeback);
+        }
     };
 </script>
 </body>
