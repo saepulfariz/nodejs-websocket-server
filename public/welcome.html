@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+</head>
+
+<body>
+    <h1>Welcome!</h1>
+    <p id="welcomeMessage">Waiting for input...</p>
+
+    <script>
+        const ws = new WebSocket('ws://localhost:8080');
+
+        ws.onmessage = (event) => {
+            console.log(event);
+            document.getElementById('welcomeMessage').textContent = event.data;
+        };
+    </script>
+</body>
+
+</html>

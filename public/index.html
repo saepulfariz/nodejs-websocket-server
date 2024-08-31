@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Page</title>
+</head>
+
+<body>
+    <h1>Input Text</h1>
+    <form id="inputForm">
+        <input type="text" id="inputText" placeholder="Enter something..." required>
+        <button id="submit" type="button">Submit</button>
+    </form>
+
+    <script>
+        const ws = new WebSocket('ws://localhost:8080');
+
+
+        /*
+        document.getElementById('inputForm').onsubmit = (event) => {
+            event.preventDefault();
+            const inputText = document.getElementById('inputText').value;
+            ws.send(inputText);
+            window.location.href = 'welcome.html';
+        };
+		*/
+
+        document.getElementById('submit').onclick = (event) => {
+            event.preventDefault();
+            var inputText = document.getElementById('inputText').value;
+            inputText = 'setwelcome : ' + inputText;
+            ws.send(inputText);
+        };
+    </script>
+</body>
+
+</html>
