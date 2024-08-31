@@ -5,13 +5,25 @@ const path = require("path");
 
 const app = express();
 
-app.set("view engine", "ejs");
-
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 // Rute untuk melayani file HTML
 // app.use(express.static(path.join(__dirname, "public")));
+
+// app.use(express.static(path.join(__dirname, "public")));
+// app.set("views", path.join(__dirname, "views"));
+
+// app.use("/public", express.static(path.join(__dirname, "public")));
+// Serve static files from the 'public' directory
+// app.use(express.static(path.join(__dirname, "public")));
+// app.use("/public", express.static(path.join(__dirname, "public")));
+
+// app.use("/public", express.static("public"));
+
+// app.set("views", __dirname + "/views");
+app.set("view engine", "ejs");
+app.use(express.static("public"));
 
 var port = 8080;
 
@@ -19,7 +31,7 @@ app.get("/", function (req, res) {
   var hostname = req.hostname;
 
   res.render("index", {
-    title: "WebSocket",
+    title: "Index",
     port: port,
     hostname: hostname,
   });
@@ -29,11 +41,13 @@ app.get("/welcome", function (req, res) {
   var hostname = req.hostname;
 
   res.render("welcome", {
-    title: "WebSocket",
+    title: "Welcome",
     port: port,
     hostname: hostname,
   });
 });
+
+// app.use(express.static("public"));
 
 wss.on("connection", (ws) => {
   console.log("Client connected");

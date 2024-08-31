@@ -1,34 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('template/header'); %>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <h1>Welcome!</h1>
+                    <marquee id="welcomeMessage" behavior="" direction="">Waiting for input...</marquee>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome Page - <%= title %></title>
-</head>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<body>
-    <h1>Welcome!</h1>
-    <p id="welcomeMessage">Waiting for input...</p>
+<%- include('template/footer'); %>
 
-    <script>
-        let port = '<%-port%>'
-        let hostname = '<%-hostname%>'
-        const ws = new WebSocket(`ws://` + hostname + `:` + port);
+<script>
+    let port = '<%-port%>'
+    let hostname = '<%-hostname%>'
+    const ws = new WebSocket(`ws://` + hostname + `:` + port);
 
-        ws.onopen = function (e) {
-            console.log("Connection established!");
-        };
+    ws.onopen = function (e) {
+        console.log("Connection established!");
+    };
 
-        ws.onclose = function () {
-            console.log('Not connect');
-        };
+    ws.onclose = function () {
+        console.log('Not connect');
+    };
 
-        ws.onmessage = (event) => {
-            console.log(event);
-            document.getElementById('welcomeMessage').textContent = event.data;
-        };
-    </script>
+    ws.onmessage = (event) => {
+        console.log(event);
+        document.getElementById('welcomeMessage').textContent = event.data;
+    };
+</script>
 </body>
 
 </html>

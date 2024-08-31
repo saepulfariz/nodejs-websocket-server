@@ -1,39 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('template/header'); %>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form id="inputForm">
+                        <div class="mb-2">
+                            <label for="inputText">Input Text</label>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Page - <%= title %></title>
-</head>
+                            <input type="text" id="inputText" class="form-control" placeholder="Enter something..."
+                                required>
+                        </div>
+                        <button id="submit" type="button" class="btn btn-primary">Submit</button>
+                        <a href="/welcome" target="_blank" class="btn btn-success">Result</a>
+                    </form>
 
-<body>
-    <h1>Input Text</h1>
-    <form id="inputForm">
-        <input type="text" id="inputText" placeholder="Enter something..." required>
-        <button id="submit" type="button">Submit</button>
-    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <script>
-        let port = '<%-port%>'
-        let hostname = '<%-hostname%>'
-        const ws = new WebSocket(`ws://` + hostname + `:` + port);
+<%- include('template/footer'); %>
 
-        ws.onopen = function (e) {
-            console.log("Connection established!");
-        };
+<script>
+    let port = '<%-port%>'
+    let hostname = '<%-hostname%>'
+    const ws = new WebSocket(`ws://` + hostname + `:` + port);
 
-        ws.onclose = function () {
-            console.log('Not connect');
-        };
+    ws.onopen = function (e) {
+        console.log("Connection established!");
+    };
 
-        document.getElementById('submit').onclick = (event) => {
-            event.preventDefault();
-            var inputText = document.getElementById('inputText').value;
-            inputText = 'setwelcome : ' + inputText;
-            ws.send(inputText);
-        };
-    </script>
+    ws.onclose = function () {
+        console.log('Not connect');
+    };
+
+    document.getElementById('submit').onclick = (event) => {
+        event.preventDefault();
+        var inputText = document.getElementById('inputText').value;
+        inputText = 'setwelcome : ' + inputText;
+        ws.send(inputText);
+    };
+</script>
 </body>
 
 </html>
